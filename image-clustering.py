@@ -148,7 +148,6 @@ def calc_hierarchical(data, metric, method):
     reordered_data = []
     for index in indexes:
         reordered_data.append(data[index - 1])
-    del indexes
     return array(reordered_data)
 
 def calc_greedy_order(data, metric):
