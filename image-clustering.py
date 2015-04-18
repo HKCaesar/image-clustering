@@ -45,32 +45,28 @@ def generate_html_for_image(image_path, convert_to_gray, shuffle_rows, shuffle_c
     shuffle_image_data(image_data, shuffle_rows, shuffle_columns)
     imsave("Output\\shuffled_" + orig_image_name, image_data)
     html += '<td><center><h2>Shuffled</h2><h4>(Rows shuffled: ' + str(shuffle_rows) + ', Columns shuffled: ' + str(shuffle_columns) + ', Grayscale: ' + str(convert_to_gray) + ')</h4></center><img src="shuffled_' + orig_image_name + '"></td>'
-    
-    greedy_order_image = do_greedy_order(image_data, "euclidean", convert_to_gray, shuffle_rows, shuffle_columns)
-    imsave("Output\\greedy_" + orig_image_name, greedy_order_image[0])
-    html += '<td><center><h2>Greedy Ordering (' + str(greedy_order_image[1]) + 's)</h2><h4>(Similarity metric: ' + greedy_order_image[2] + ')</h4></center><img src="greedy_' + orig_image_name + '" width="100%"></td></tr>'
-    
+        
     hierarchical_image = do_hierarchical(image_data, "euclidean", "single", convert_to_gray, shuffle_rows, shuffle_columns)
     imsave("Output\\hierarchical_" + orig_image_name, hierarchical_image[0])
-    html += '<tr><td><center><h2>Hierarchical Clustering (' + str(hierarchical_image[1]) + 's)</h2><h4>(Similarity metric: ' + hierarchical_image[3] + ', Clustering method: ' + hierarchical_image[2] + ')</h4></center><img src="hierarchical_' + orig_image_name + '"></td>' 
+    html += '<td><center><h2>Hierarchical Clustering (' + str(hierarchical_image[1]) + 's)</h2><h4>(Similarity metric: ' + hierarchical_image[3] + ', Clustering method: ' + hierarchical_image[2] + ')</h4></center><img src="hierarchical_' + orig_image_name + '"></td></tr>' 
     
     hierarchical_optimal_image = do_hierarchical_optimal(image_data, "euclidean", "single", convert_to_gray, shuffle_rows, shuffle_columns)
     imsave("Output\\hierarchical_optimal_" + orig_image_name, hierarchical_optimal_image[0])
-    html += '<td><center><h2>Optimal Hierarchical Clustering(' + str(hierarchical_optimal_image[1]) + 's)</h2><h4>(Similarity metric: ' + hierarchical_optimal_image[3] + ', Clustering method: ' + hierarchical_optimal_image[2] + ')</h4></center><img src="hierarchical_optimal_' + orig_image_name + '"></td>' 
+    html += '<tr><td><center><h2>Optimal Hierarchical Clustering(' + str(hierarchical_optimal_image[1]) + 's)</h2><h4>(Similarity metric: ' + hierarchical_optimal_image[3] + ', Clustering method: ' + hierarchical_optimal_image[2] + ')</h4></center><img src="hierarchical_optimal_' + orig_image_name + '"></td>' 
     
-    kmeans_image = do_kmeans(image_data, len(image_data) // 10, 10000, 1, convert_to_gray, shuffle_rows, shuffle_columns)
+    kmeans_image = do_kmeans(image_data, len(image_data) // 10, 10000, convert_to_gray, shuffle_rows, shuffle_columns)
     imsave("Output\\kmeans_" + orig_image_name, kmeans_image[0])
-    html += '<td><center><h2>K-Means Clustering(' + str(kmeans_image[1]) + 's)</h2><h4>(Similarity metric: ' + kmeans_image[5] + ', Clusters: ' + str(kmeans_image[2]) + ', Iterations: ' + str(kmeans_image[3]) + ', Starts: ' + str(kmeans_image[4]) + ')</h4></center><img src="kmeans_' + orig_image_name + '"></td></tr>' 
+    html += '<td><center><h2>K-Means Clustering(' + str(kmeans_image[1]) + 's)</h2><h4>(Clusters: ' + str(kmeans_image[2]) + ', Max iterations: ' + str(kmeans_image[3]) + ')</h4></center><img src="kmeans_' + orig_image_name + '"></td>' 
     
-    kmeans_greedy_image = do_kmeans_greedy(image_data, len(image_data) // 10, 10000, 1, convert_to_gray, shuffle_rows, shuffle_columns)
+    kmeans_greedy_image = do_kmeans_greedy(image_data, len(image_data) // 10, 10000, convert_to_gray, shuffle_rows, shuffle_columns)
     imsave("Output\\kmeans_greedy_" + orig_image_name, kmeans_greedy_image[0])
-    html += '<tr><td><center><h2>Greedy K-Means Clustering(' + str(kmeans_greedy_image[1]) + 's)</h2><h4>(Similarity metric: ' + kmeans_greedy_image[5] + ', Clusters: ' + str(kmeans_greedy_image[2]) + ', Iterations: ' + str(kmeans_greedy_image[3]) + ', Starts: ' + str(kmeans_greedy_image[4]) + ')</h4></center><img src="kmeans_greedy_' + orig_image_name + '"></td>' 
+    html += '<td><center><h2>Greedy K-Means Clustering(' + str(kmeans_greedy_image[1]) + 's)</h2><h4>(Clusters: ' + str(kmeans_greedy_image[2]) + ', Max iterations: ' + str(kmeans_greedy_image[3]) + ')</h4></center><img src="kmeans_greedy_' + orig_image_name + '"></td></tr>' 
    
-    som_image = do_som(image_data, len(image_data) // 10, 75000, 0.9, convert_to_gray, shuffle_rows, shuffle_columns)
+    som_image = do_som(image_data, len(image_data) // 10, 75000, 0.02, convert_to_gray, shuffle_rows, shuffle_columns)
     imsave("Output\\som_" + orig_image_name, som_image[0])
-    html += '<td><center><h2>1-D Self-Organizing Map(' + str(som_image[1]) + 's)</h2><h4>(Similarity metric: ' + som_image[2] + ', Clusters: ' + str(som_image[3]) + ', Iterations: ' + str(som_image[4]) + ', Tau: ' + str(som_image[5]) + ')</h4></center><img src="som_' + orig_image_name + '"></td>' 
+    html += '<tr><td><center><h2>1-D Self-Organizing Map(' + str(som_image[1]) + 's)</h2><h4>(Similarity metric: ' + som_image[2] + ', Clusters: ' + str(som_image[3]) + ', Iterations: ' + str(som_image[4]) + ', Tau: ' + str(som_image[5]) + ')</h4></center><img src="som_' + orig_image_name + '"></td>' 
 
-    greedy_som_image = do_greedy_som(image_data, len(image_data) // 10, 75000, 0.9, convert_to_gray, shuffle_rows, shuffle_columns)
+    greedy_som_image = do_greedy_som(image_data, len(image_data) // 10, 75000, 0.02, convert_to_gray, shuffle_rows, shuffle_columns)
     imsave("Output\\greedy_som_" + orig_image_name, greedy_som_image[0])
     html += '<td><center><h2>Greedy 1-D Self-Organizing Map(' + str(greedy_som_image[1]) + 's)</h2><h4>(Similarity metric: ' + greedy_som_image[2] + ', Clusters: ' + str(greedy_som_image[3]) + ', Iterations: ' + str(greedy_som_image[4]) + ', Tau: ' + str(greedy_som_image[5]) +  ')</h4></center><img src="greedy_som_' + orig_image_name + '"></td></tr></table>' 
 
@@ -155,31 +151,9 @@ def calc_hierarchical(data, metric, method):
     del indexes
     return array(reordered_data)
 
-#Possible similarity metrics: http://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.spatial.distance.pdist.html + custom methods, currently "DTW"
-def do_greedy_order(data, metric, convert_to_gray, shuffle_rows, shuffle_columns):
-    time_start = time()
-    result = data
-    if shuffle_rows:
-        result = reshape(result, (len(result), result[0].size))
-        result = calc_greedy_order(result, metric)
-        if not convert_to_gray:
-            result = reshape(result, (len(result), result[0].size // 3, 3))
-    if shuffle_columns:
-        result = result.swapaxes(0, 1)
-        result = reshape(result, (len(result), result[0].size))
-        result = calc_greedy_order(result, metric)
-        if not convert_to_gray:
-            result = reshape(result, (len(result), result[0].size // 3, 3))
-        result = result.swapaxes(0, 1)
-    time_total = round(time() - time_start, 3)
-    return (result, time_total, metric)
-
 def calc_greedy_order(data, metric):
-    if metric == "dtw":
-        r_dist = r.dist(data, method = "DTW", window_type = "sakoechiba", window_size = len(data) // 50, distance_only ='TRUE') 
-    else:
-        dist_matrix = squareform(pdist(data, metric))
-        r_dist = stats.as_dist(dist_matrix) 
+    dist_matrix = squareform(pdist(data, metric))
+    r_dist = stats.as_dist(dist_matrix) 
     ordered_data = cba.order_greedy(r_dist)[1]
     indexes = array(ordered_data)
     reordered_data = []
@@ -188,28 +162,28 @@ def calc_greedy_order(data, metric):
     return array(reordered_data)
 
 #Possible similarity metrics: "euclidean"
-def do_kmeans(data, clusters, iterations, starts, convert_to_gray, shuffle_rows, shuffle_columns):
+def do_kmeans(data, clusters, iterations, convert_to_gray, shuffle_rows, shuffle_columns):
     time_start = time()
     result = data
     if shuffle_rows:
         result = reshape(result, (len(result), result[0].size))
-        result = calc_kmeans(result, clusters, iterations, starts)
+        result = calc_kmeans(result, clusters, iterations)
         if not convert_to_gray:
             result = reshape(result, (len(result), result[0].size // 3, 3))
     if shuffle_columns:
         result = result.swapaxes(0, 1)
         result = reshape(result, (len(result), result[0].size))
-        result = calc_kmeans(result, clusters, iterations, starts)
+        result = calc_kmeans(result, clusters, iterations)
         if not convert_to_gray:
             result = reshape(result, (len(result), result[0].size // 3, 3))
         result = result.swapaxes(0, 1)
     time_total = round(time() - time_start, 3)
-    return (result, time_total, clusters, iterations, starts, "euclidean")
+    return (result, time_total, clusters, iterations)
 
-def calc_kmeans(data, clusters, iterations, starts):
+def calc_kmeans(data, clusters, iterations):
     data_as_list = data.flatten()
     data_as_rmatrix = r.matrix(data_as_list, ncol = len(data[0]), byrow = True)
-    cluster_indexes = array(r.kmeans(data_as_rmatrix, clusters, iter_max = iterations, nstart = starts)[0])
+    cluster_indexes = array(r.kmeans(data_as_rmatrix, clusters, iter_max = iterations, nstart = 1)[0])
     reordered_data = []
     for i in range (1, clusters + 1):
         indexes = where(cluster_indexes == i)[0]
@@ -218,28 +192,28 @@ def calc_kmeans(data, clusters, iterations, starts):
     return array(reordered_data)
 
 #Possible similarity metrics: "euclidean"
-def do_kmeans_greedy(data, clusters, iterations, starts, convert_to_gray, shuffle_rows, shuffle_columns):
+def do_kmeans_greedy(data, clusters, iterations, convert_to_gray, shuffle_rows, shuffle_columns):
     time_start = time()
     result = data
     if shuffle_rows:
         result = reshape(result, (len(result), result[0].size))
-        result = calc_kmeans_greedy(result, clusters, iterations, starts)
+        result = calc_kmeans_greedy(result, clusters, iterations)
         if not convert_to_gray:
             result = reshape(result, (len(result), result[0].size // 3, 3))
     if shuffle_columns:
         result = result.swapaxes(0, 1)
         result = reshape(result, (len(result), result[0].size))
-        result = calc_kmeans_greedy(result, clusters, iterations, starts)
+        result = calc_kmeans_greedy(result, clusters, iterations)
         if not convert_to_gray:
             result = reshape(result, (len(result), result[0].size // 3, 3))
         result = result.swapaxes(0, 1)
     time_total = round(time() - time_start, 3)
-    return (result, time_total, clusters, iterations, starts, "euclidean")
+    return (result, time_total, clusters, iterations)
 
-def calc_kmeans_greedy(data, clusters, iterations, starts):
+def calc_kmeans_greedy(data, clusters, iterations):
     data_as_list = data.flatten()
     data_as_rmatrix = r.matrix(data_as_list, ncol = len(data[0]), byrow = True)
-    cluster_indexes = array(r.kmeans(data_as_rmatrix, clusters, iter_max = iterations, nstart = starts)[0])
+    cluster_indexes = array(r.kmeans(data_as_rmatrix, clusters, iter_max = iterations, nstart = 1)[0])
     ordered_clusters = order_kcluster_contents(clusters, cluster_indexes, data)
     return order_clusters(ordered_clusters)    
 
