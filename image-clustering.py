@@ -182,7 +182,7 @@ def do_kmeans(data, clusters, iterations, convert_to_gray, shuffle_rows, shuffle
 def calc_kmeans(data, clusters, iterations):
     data_as_list = data.flatten()
     data_as_rmatrix = r.matrix(data_as_list, ncol = len(data[0]), byrow = True)
-    cluster_indexes = array(r.kmeans(data_as_rmatrix, clusters, iter_max = iterations, nstart = 1)[0])
+    cluster_indexes = array(r.kmeans(data_as_rmatrix, clusters, iter_max = iterations, nstart = 1, algorithm = "MacQueen")[0])
     reordered_data = []
     for i in range (1, clusters + 1):
         indexes = where(cluster_indexes == i)[0]
@@ -212,7 +212,7 @@ def do_kmeans_greedy(data, clusters, iterations, convert_to_gray, shuffle_rows, 
 def calc_kmeans_greedy(data, clusters, iterations):
     data_as_list = data.flatten()
     data_as_rmatrix = r.matrix(data_as_list, ncol = len(data[0]), byrow = True)
-    cluster_indexes = array(r.kmeans(data_as_rmatrix, clusters, iter_max = iterations, nstart = 1)[0])
+    cluster_indexes = array(r.kmeans(data_as_rmatrix, clusters, iter_max = iterations, nstart = 1, algorithm = "MacQueen")[0])
     ordered_clusters = order_kcluster_contents(clusters, cluster_indexes, data)
     return order_clusters(ordered_clusters)    
 
