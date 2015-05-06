@@ -54,19 +54,19 @@ def generate_html_for_image(image_path, convert_to_gray, shuffle_rows, shuffle_c
     imsave("Output\\hierarchical_optimal_" + orig_image_name, hierarchical_optimal_image[0])
     html += '<tr><td><center><h2>Optimal Hierarchical Clustering(' + str(hierarchical_optimal_image[1]) + 's)</h2><h4>(Similarity metric: ' + hierarchical_optimal_image[3] + ', Clustering method: ' + hierarchical_optimal_image[2] + ')</h4></center><img src="hierarchical_optimal_' + orig_image_name + '"></td>' 
     
-    kmeans_image = do_kmeans(image_data, len(image_data) // 10, 10000, convert_to_gray, shuffle_rows, shuffle_columns)
+    kmeans_image = do_kmeans(image_data, len(image_data) // 10, (len(image_data) // 10) * 500, convert_to_gray, shuffle_rows, shuffle_columns)
     imsave("Output\\kmeans_" + orig_image_name, kmeans_image[0])
     html += '<td><center><h2>K-Means Clustering(' + str(kmeans_image[1]) + 's)</h2><h4>(Clusters: ' + str(kmeans_image[2]) + ', Max iterations: ' + str(kmeans_image[3]) + ')</h4></center><img src="kmeans_' + orig_image_name + '"></td>' 
     
-    kmeans_greedy_image = do_kmeans_greedy(image_data, len(image_data) // 10, 10000, convert_to_gray, shuffle_rows, shuffle_columns)
+    kmeans_greedy_image = do_kmeans_greedy(image_data, len(image_data) // 10, (len(image_data) // 10) * 500, convert_to_gray, shuffle_rows, shuffle_columns)
     imsave("Output\\kmeans_greedy_" + orig_image_name, kmeans_greedy_image[0])
     html += '<td><center><h2>Greedy K-Means Clustering(' + str(kmeans_greedy_image[1]) + 's)</h2><h4>(Clusters: ' + str(kmeans_greedy_image[2]) + ', Max iterations: ' + str(kmeans_greedy_image[3]) + ')</h4></center><img src="kmeans_greedy_' + orig_image_name + '"></td></tr>' 
    
-    som_image = do_som(image_data, len(image_data) // 10, 75000, 0.02, convert_to_gray, shuffle_rows, shuffle_columns)
+    som_image = do_som(image_data, len(image_data) // 10, (len(image_data) // 10) * 500, 0.9, convert_to_gray, shuffle_rows, shuffle_columns)
     imsave("Output\\som_" + orig_image_name, som_image[0])
     html += '<tr><td><center><h2>1-D Self-Organizing Map(' + str(som_image[1]) + 's)</h2><h4>(Similarity metric: ' + som_image[2] + ', Clusters: ' + str(som_image[3]) + ', Iterations: ' + str(som_image[4]) + ', Tau: ' + str(som_image[5]) + ')</h4></center><img src="som_' + orig_image_name + '"></td>' 
 
-    greedy_som_image = do_greedy_som(image_data, len(image_data) // 10, 75000, 0.02, convert_to_gray, shuffle_rows, shuffle_columns)
+    greedy_som_image = do_greedy_som(image_data, len(image_data) // 10, (len(image_data) // 10) * 500, 0.9, convert_to_gray, shuffle_rows, shuffle_columns)
     imsave("Output\\greedy_som_" + orig_image_name, greedy_som_image[0])
     html += '<td><center><h2>Greedy 1-D Self-Organizing Map(' + str(greedy_som_image[1]) + 's)</h2><h4>(Similarity metric: ' + greedy_som_image[2] + ', Clusters: ' + str(greedy_som_image[3]) + ', Iterations: ' + str(greedy_som_image[4]) + ', Tau: ' + str(greedy_som_image[5]) +  ')</h4></center><img src="greedy_som_' + orig_image_name + '"></td></tr></table>' 
 
@@ -355,5 +355,5 @@ def calc_greedy_som(data, clusters, iterations, tau):
     return concatenate(ordered_clusters)
 
 t = time()
-generate_results_as_html(shuffle_columns=False)
+generate_results_as_html()
 print (round(time() - t, 3), 'sec elapsed')
